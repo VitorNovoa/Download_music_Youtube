@@ -1,5 +1,6 @@
 import os
 import yt_dlp
+from itertools import count
 from unidecode import unidecode
 
 print("🎵 Olá, bem-vindo ao downTube!! 🎵")
@@ -12,29 +13,53 @@ def progresso_hook(d):
         print(f"✅ Download finalizado: {d['filename']}")
 
 def adiciona_musica(quantidade):
-    quant = quantidade + 1
-    artista = input(f"N°{quant} - Digite o nome de um artista válido: \n")
-    musica = input(f"N°{quant} - Agora digite o nome de uma música que o artista possua: \n")
     while True:
-        tipo = str(input("Deseja a música apenas de estudio? \n Sim ou Não \n")).strip().lower()
+        tipo = str(input("Deseja a música apenas de estudio? \n" \
+                         "Sim ou Não \n")).strip().lower()
         if unidecode(tipo) == "sim":
-            tipo = "Lyrics"
+            tipo = " - Lyrics"
+            break
+        elif unidecode(tipo) == "nao":
+            break
         else:
-            tipo = ""
-        break
-    artista_musica = unidecode(artista) + " - " + unidecode(musica) + " " + tipo
-    lista_musicas.append(artista_musica)
+            print("⚠️ Por favor digite uma opção válida!!! \n")      
+            
+    if quantidade > 1:
+        while True:
+            musica_lista_musicas = str(input("Deseja adicionar uma lista de músicas de uma vez ? \n" "Sim - Não: \n")).strip().lower()
+            if musica_lista_musicas == 'sim':
+                lista_varias_musicas = str(input("Digite a lista de músicas separando o artista da música com - e o próximo item com #. \n" \
+                                                "Como no exemplo: Queen - We Are the Champions # Queen - We Will Rock You \n" ))
+                separa_itens = lista_varias_musicas.split("#")
+                for x in separa_itens:
+                    artista_musica_lista = str(x).split('-')
+                    artista = artista_musica_lista[0]
+                    musica = artista_musica_lista[1]
+                    artista = artista.lstrip()
+                    artista_musica = unidecode(artista) + " - " + unidecode(musica) + " " + tipo
+                    lista_musicas.append(artista_musica)
+
+                break
+
+            elif unidecode(musica_lista_musicas) == "nao":
+                artista = input(f"N°{quantidade} - Digite o nome de um artista válido: \n")
+                musica = input(f"N°{quantidade} - Agora digite o nome de uma música que o artista possua: \n")
+                artista_musica = unidecode(artista) + " - " + unidecode(musica) + " " + tipo
+                lista_musicas.append(artista_musica)
+                break
+            else:
+                print("⚠️ Por favor digite uma opção válida!!! \n")
 
 def monta_lista_musica():
     while True:
         try:
             quantidade = int(input("Digite a quantidade de músicas que você quer inserir na lista de downloads (apenas números): "))
-            for q in range(quantidade):
-                adiciona_musica(q)
+            adiciona_musica(quantidade)
             print("\n🎵 Sua lista de downloads atual:")
             for i, item in enumerate(lista_musicas, start=1):
                 print(f"{i}. {item}")
             break
+
         except ValueError:
             print("⚠️ Entrada inválida! Por favor digite apenas números.\n")
 
@@ -63,7 +88,7 @@ while True:
     monta_lista_musica()
 
     while True:
-        opcao_add = input("Deseja inserir mais alguma música à lista de download? (Sim ou Não): ").strip().lower()
+        opcao_add = input("Deseja inserir mais alguma música à lista de download? (Sim ou Não): \n").strip().lower()
         if unidecode(opcao_add) in ["sim", "nao"]:
             break
         else:
