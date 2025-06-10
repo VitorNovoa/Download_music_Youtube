@@ -38,7 +38,6 @@ def adiciona_musica(quantidade):
                     artista = artista.lstrip()
                     artista_musica = unidecode(artista) + " - " + unidecode(musica) + " " + tipo
                     lista_musicas.append(artista_musica)
-
                 break
 
             elif unidecode(musica_lista_musicas) == "nao":
