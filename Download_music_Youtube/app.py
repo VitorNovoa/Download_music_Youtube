@@ -27,7 +27,7 @@ def adiciona_musica(quantidade):
         
         #Condição de verificação do tipo para pegar a música apenas de estúdio ou se irá receber ao vivo também
         if unidecode(tipo) == "sim":
-            tipo = " - Lyrics"
+            tipo = "Lyrics"
             break
 
         #É utilizado unidecode para conversão no padrão ANCII e não gerar erros na resposta
@@ -45,8 +45,8 @@ def adiciona_musica(quantidade):
         while True:
             #Variável de verificação de recebimento de uma string com várias músicas ou uma inserção uma por uma.
             musica_lista_musicas = str(input("Deseja adicionar uma lista de músicas de uma vez ? \n" "Sim - Não: \n")).strip().lower()
+            
             #Condição que recebe uma string com todas as músicas de uma vez.
-
             if musica_lista_musicas == 'sim':
                 #Variável que recebe uma lista músicas em uma string sendo necessário obedecer o exemplo mostrado
                 lista_varias_musicas = str(input("Digite a lista de músicas separando o artista da música com - e o próximo item com #. \n" 
@@ -63,7 +63,7 @@ def adiciona_musica(quantidade):
                     musica = artista_musica_lista[1]
                     artista = artista.lstrip()
                     #Concatenação em uma string para busca com os dados de artista, música e tipo
-                    artista_musica = unidecode(artista) + " - " + unidecode(musica) + " " + tipo
+                    artista_musica = artista + " - " + musica + " - " + tipo
                     #Adição dos dados na lista de downloads
                     lista_musicas.append(artista_musica)
                 break
@@ -74,7 +74,7 @@ def adiciona_musica(quantidade):
                 artista = input(f"N°{quantidade} - Digite o nome de um artista válido: \n")
                 musica = input(f"N°{quantidade} - Agora digite o nome de uma música que o artista possua: \n")
                 #Concatenação em uma string para busca com os dados de artista, música e tipo
-                artista_musica = unidecode(artista) + " - " + unidecode(musica) + " " + tipo
+                artista_musica = artista + " - " + musica + " - " + tipo
                 #Adição dos dados na lista de downloads
                 lista_musicas.append(artista_musica)
                 break
@@ -84,6 +84,16 @@ def adiciona_musica(quantidade):
             else:
                 print("⚠️ Por favor digite uma opção válida!!! \n")
 
+    #Condição onde o usuário terá que digitar artista e música de forma manual e  um de cada vez
+    else:
+        #Variáveis de recebimento dos dados
+        artista = input(f"N°{quantidade} - Digite o nome de um artista válido: \n")
+        musica = input(f"N°{quantidade} - Agora digite o nome de uma música que o artista possua: \n")
+        #Concatenação em uma string para busca com os dados de artista, música e tipo
+        artista_musica = artista + " - " + musica + " - " + tipo
+        #Adição dos dados na lista de downloads
+        lista_musicas.append(artista_musica)
+
 #Função que monta a lista de músicas
 def monta_lista_musica():
     #Loop While de tratativa de resposta da pergunta
@@ -92,6 +102,12 @@ def monta_lista_musica():
         try:
             #Variável que recebe a quantidade de músicas a serem baixadas
             quantidade = int(input("Digite a quantidade de músicas que você quer inserir na lista de downloads (apenas números): \n"))
+            
+            #Condição que o usuário irá digitar um número válido
+            if quantidade < 1:
+                print("⚠️ Por favor digite uma opção válida!!! \n")
+                continue
+
             #Chamada da função de adição das músicas nas listas
             adiciona_musica(quantidade)
             #Print de apresentação das músicas adicionadas para verificação 
