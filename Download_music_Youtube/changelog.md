@@ -2,6 +2,18 @@
 
 Projeto de estudos Python
 
+##[1.1] - 2025-06-11
+
+#Origem do projeto
+*Foi necessário ser realizado o download de músicas do youtube para utilização e vendo essa necessidade o projeto foi
+idealizado e desenvolvido.
+
+##Destaque da versão
+*Correção de erro de execução com a seleção de uma única música e correção de textos dos prints
+
+##Corrigido
+*Erro na condição no caso do usuário digita apenas uma única música
+
 ##[1.0] - 2025-06-11
 
 #Origem do projeto
