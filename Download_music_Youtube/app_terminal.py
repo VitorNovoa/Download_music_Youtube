@@ -3,6 +3,7 @@ import os
 import yt_dlp
 from itertools import count
 from unidecode import unidecode
+import tkinter as tk
 
 # Mensagem inicial e implementação da lista de músicas
 print("🎵 Olá, bem-vindo ao downTube!! 🎵")
@@ -118,7 +119,7 @@ def monta_lista_musica():
             break
         #Exeção em caso seja digitado um dado diferente de um número
         except ValueError:
-            print("⚠️ Entrada inválida! Por favor digite apenas números.\n")
+            print("⚠️ Entrada inválida! Por favor digite apenas números!!!\n")
 
 #Função de download das músicas
 def baixa_musicas(musica):
@@ -144,52 +145,55 @@ def baixa_musicas(musica):
     with yt_dlp.YoutubeDL(options) as ydl:
         ydl.download([url])
 
-#Loop de execução do programa
-while True:
-    #Chamada da função para montar a lista de músicas para downloads
-    monta_lista_musica()
-    #Loop While de tratativa de resposta da pergunta
+#Realiza a verificação para executar o programa como módulo ou aplicativo
+if __name__ == "__main__":
+    #Loop de execução do programano terminal
     while True:
-        #Variável de verificação se caso o usuário queira adicionar mais músicas
-        opcao_add = input("Deseja inserir mais alguma música à lista de download? (Sim ou Não): \n").strip().lower()
-        #Condição de verificação da resposta
-        if unidecode(opcao_add) in ["sim", "nao"]:
-            break
-        #Tratativa em caso a resposta seja inválida
-        else:
-            print("⚠️ Opção inválida! Por favor digite Sim ou Não.\n")
+        #Chamada da função para montar a lista de músicas para downloads
+        monta_lista_musica()
+        #Loop While de tratativa de resposta da pergunta
+        while True:
+            #Variável de verificação se caso o usuário queira adicionar mais músicas
+            opcao_add = input("Deseja inserir mais alguma música à lista de download? (Sim ou Não): \n").strip().lower()
+            #Condição de verificação da resposta
+            if unidecode(opcao_add) in ["sim", "nao"]:
+                break
+            #Tratativa em caso a resposta seja inválida
+            else:
+                print("⚠️ Opção inválida! Por favor digite Sim ou Não.\n")
 
-    #Condição que finaliza o processo do loop para retornar ao processo de adição de músicas
-    if unidecode(opcao_add) == "sim":
-        continue  #Volta para adicionar mais músicas
-    
-    print("Baixando as músicas, porfavor aguarde!!!")
-    #Loop de realização dos downloads
-    for musica in lista_musicas:
-        #Chamada da função de download dos arquivos 
-        baixa_musicas(musica)
-
-    print("✅ Músicas abaixo baixadas com sucesso na pasta 'downloads'!\n")
-    #Loop de apresentação da lista de músicas baixadas
-    for i, item in enumerate(lista_musicas, start=1):
-        print(f"{i}. {item}")
-
-    #Loop While de tratativa de resposta da pergunta 
-    while True:
-        #Variável de condição de finalização do programa
-        encerrar = input('Deseja baixar mais músicas ou encerrar o programa? (Baixar/Encerrar): ').strip().lower()
+        #Condição que finaliza o processo do loop para retornar ao processo de adição de músicas
+        if unidecode(opcao_add) == "sim":
+            continue  #Volta para adicionar mais músicas
         
-        #Condição para finalização do programa ou continuação de mais um processo de download
-        if encerrar in ["baixar", "encerrar"]:
-            break
-        #Tratativa em caso a resposta seja inválida
-        else:
-            print("⚠️ Opção inválida! Por favor digite uma das opções válidas - Baixar ou Encerrar")
+        print("Baixando a(s) música(s), por favor aguarde!!!")
+        #Loop de realização dos downloads
+        for musica in lista_musicas:
+            #Chamada da função de download dos arquivos 
+            baixa_musicas(musica)
 
-    #Condição para finalização do programa
-    if encerrar == "encerrar":
-        print("👋 Encerrando o programa. Até a próxima!")
-        break
-    #Caso não deseje finalizar o programa
-    else:
-        lista_musicas = []  #Limpa lista para próxima rodada
+        print("✅ Músicas abaixo baixadas com sucesso na pasta 'downloads'!\n")
+        #Loop de apresentação da lista de músicas baixadas
+        for i, item in enumerate(lista_musicas, start=1):
+            print(f"{i}. {item}")
+
+        #Loop While de tratativa de resposta da pergunta 
+        while True:
+            #Variável de condição de finalização do programa
+            encerrar = input('Deseja baixar mais músicas ou encerrar o programa? (Baixar/Encerrar): ').strip().lower()
+            
+            #Condição para finalização do programa ou continuação de mais um processo de download
+            if encerrar in ["baixar", "encerrar"]:
+                break
+            #Tratativa em caso a resposta seja inválida
+            else:
+                print("⚠️ Opção inválida! Por favor digite uma das opções válidas - Baixar ou Encerrar")
+
+        #Condição para finalização do programa
+        if encerrar == "encerrar":
+            print("👋 Encerrando o programa. Até a próxima!")
+            break
+        #Caso não deseje finalizar o programa
+        else:
+            lista_musicas = []  #Limpa lista para próxima rodada
+
